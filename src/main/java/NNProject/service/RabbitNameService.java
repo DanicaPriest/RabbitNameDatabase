@@ -37,7 +37,7 @@ public class RabbitNameService {
 
         for (Pet r: rabbits
              ) {
-            String name = r.getName().get$t();
+            String name = r.getName().get$t().replaceAll(" [^\\w].*", "");
             rabbitNames.add(name);
             insertRN(name);
         }
