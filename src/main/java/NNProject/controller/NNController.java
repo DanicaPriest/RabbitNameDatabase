@@ -3,7 +3,6 @@ package NNProject.controller;
 import NNProject.model.Rabbit;
 import NNProject.model.User;
 import NNProject.service.RabbitNameService;
-import NNProject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,8 +21,7 @@ import java.util.ArrayList;
 public class NNController {
     @Autowired
     RabbitNameService rabbitNameService;
-    @Autowired
-    UserService userService;
+
 
     @RequestMapping(value={"/", "/login"}, method = RequestMethod.GET)
     public ModelAndView login(){
@@ -45,16 +43,16 @@ public class NNController {
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
-        User userExists = userService.findUserByName(user.getUsername());
+        User userExists = rabbitNameService.findUserByName(user.getName());
         if (userExists != null) {
             bindingResult
-                    .rejectValue("email", "error.user",
-                            "There is already a user registered with the email provided");
+                    .rejectValue("name", "error.user",
+                            "There is already a user registered with that name");
         }
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("registration");
         } else {
-            userService.saveUser(user);
+            rabbitNameService.saveUser(user);
             modelAndView.addObject("successMessage", "User has been registered successfully");
             modelAndView.addObject("user", new User());
             modelAndView.setViewName("registration");
@@ -63,14 +61,14 @@ public class NNController {
         return modelAndView;
     }
 
-    @RequestMapping(value="/admin/home", method = RequestMethod.GET)
-    public ModelAndView home(){
+    @RequestMapping(value="/admin/submit", method = RequestMethod.GET)
+    public ModelAndView submit(){
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByName(auth.getName());
-        modelAndView.addObject("userName", "Welcome " + user.getUsername());
+        User user = rabbitNameService.findUserByName(auth.getName());
+        modelAndView.addObject("userName", "Welcome " + user.getName());
         modelAndView.addObject("adminMessage","You are awesome!!");
-        modelAndView.setViewName("admin/home");
+        modelAndView.setViewName("admin/submit");
         return modelAndView;
     }
 

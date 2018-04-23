@@ -22,10 +22,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private DataSource dataSource;
-	
+
 	@Value("${spring.queries.users-query}")
 	private String usersQuery;
-	
+
 	@Value("${spring.queries.roles-query}")
 	private String rolesQuery;
 
@@ -45,19 +45,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		
 		http.
 			authorizeRequests()
-				.antMatchers("/").permitAll()
-				.antMatchers("/login").permitAll()
-				.antMatchers("/registration").permitAll()
-				.antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
+				.antMatchers("/nnproject/").permitAll()
+				.antMatchers("/nnproject/login").permitAll()
+				.antMatchers("/nnproject/registration").permitAll()
+				.antMatchers("/nnproject/admin/**").hasAuthority("ADMIN").anyRequest()
 				.authenticated().and().csrf().disable().formLogin()
-				.loginPage("/login").failureUrl("/login?error=true")
-				.defaultSuccessUrl("/admin/submit")
-				.usernameParameter("username")
+				.loginPage("/nnproject/login").failureUrl("/nnproject/login?error=true")
+				.defaultSuccessUrl("/nnproject/admin/submit")
+				.usernameParameter("name")
 				.passwordParameter("password")
 				.and().logout()
-				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-				.logoutSuccessUrl("/").and().exceptionHandling()
-				.accessDeniedPage("/access-denied");
+				.logoutRequestMatcher(new AntPathRequestMatcher("/nnproject/logout"))
+				.logoutSuccessUrl("/nnproject/").and().exceptionHandling();
 	}
 	
 	@Override

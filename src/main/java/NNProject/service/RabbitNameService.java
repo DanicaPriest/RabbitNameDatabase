@@ -1,14 +1,17 @@
 package NNProject.service;
 
 import NNProject.mapper.NNMapper;
-import NNProject.model.Pet;
-import NNProject.model.PetRoot;
-import NNProject.model.Rabbit;
+import NNProject.model.*;
+import NNProject.repository.RoleRepository;
+import NNProject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 
 @Service
 public class RabbitNameService {
@@ -17,6 +20,13 @@ public class RabbitNameService {
 
     @Autowired
     NNMapper nnMapper;
+
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private RoleRepository roleRepository;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     //maps the data from the petfinder api to an object
     public PetRoot getRabbits(String location, String count) {
@@ -79,4 +89,18 @@ public class RabbitNameService {
         return finalList;
     }
 
+   /* public User findUserByName(String username) {
+
+        return nnMapper.getUser(username);
+    }*/
+
+    public void saveUser(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setActive(1);
+        Role userRole = roleRepository.findByRole("ADMIN");
+        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+        userRepository.save(user);
+    }
+    public User findUserByName(String username) {
+        return userRepository.findByName(username);}
 }

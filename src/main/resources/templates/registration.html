@@ -6,21 +6,69 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<style>
+	body{
+	background:#9999ff;
+	}
+	h1{
+        padding-top:15px;
+        padding-bottom:15px;
+        color:black;
+        }
+.btn {
+    position: relative;
+    border: none;
+    font-size: 28px;
+    color: #FFFFFF;
+    padding: 20px;
+    text-align: center;
+    -webkit-transition-duration: 0.2s; /* Safari */
+    transition-duration: 0.2s;
+    text-decoration: none;
+    overflow: hidden;
+    box-shadow: 5px 5px 15px navy;
+
+}
+
+.btn:after {
+    content: "";
+    background: violet;
+    display: block;
+    position: absolute;
+    padding-top: 300%;
+    padding-left: 350%;
+    margin-left: -20px!important;
+    margin-top: -120%;
+    opacity: 0;
+    transition: all 0.4s;
+
+}
+
+.btn:hover:after {
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s
+}
+btn-warning{
+margin-left:50%;
+}
+</style>
 </head>
 <body>
 	
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
-				<form autocomplete="off" action="#" th:action="@{/registration}"
+				<form autocomplete="off" action="#" th:action="@{/nnproject/registration}"
 					th:object="${user}" method="post" class="form-horizontal"
 					role="form">
-					<h2 style="color:white">Registration Form</h2>
+					<h2>Registration Form</h2>
 					<div class="form-group">
 						<div class="col-sm-9">
 						<label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
 								></label>
-						<input type="text" th:field="*{name}" placeholder="Name"
+						<input type="text" th:field="*{name}" placeholder="UserName"
 								class="form-control" /> 
 						</div>
 					</div>
@@ -36,18 +84,20 @@
 
 					<div class="form-group">
 						<div class="col-sm-9">
-							<button type="submit" class="btn btn-primary">Register User</button>
+							<button type="submit" class="btn btn-primary btn-block">Register User</button>
 						</div>
 					</div>
 
-					
+					<span th:utext="${successMessage}"></span>
 					
 				</form>
+
+
+	<form th:action="@{/nnproject/login}" method="get">
+		<button class="btn btn-warning" type="Submit">Go To Login Page</button>
+	</form>
 			</div>
 		</div>
-	</div>
-	<form th:action="@{/}" method="get">
-		<button class="btn btn-md btn-warning" type="Submit">Go To Login Page</button>
-	</form>
+		</div>
 </body>
 </html>
