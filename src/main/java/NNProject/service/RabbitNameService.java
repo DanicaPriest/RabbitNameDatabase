@@ -3,6 +3,7 @@ package NNProject.service;
 import NNProject.mapper.NNMapper;
 import NNProject.model.Pet;
 import NNProject.model.PetRoot;
+import NNProject.model.Rabbit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -37,7 +38,7 @@ public class RabbitNameService {
 
         for (Pet r: rabbits
              ) {
-            String name = r.getName().get$t().replaceAll(" [^\\w].*", "");
+            String name = r.getName().get$t().replaceAll(" [^\\w].*", "").replaceAll(" [ at ].*", "").replaceAll("\\d.*", "");
             rabbitNames.add(name);
             insertRN(name);
         }
@@ -45,9 +46,37 @@ public class RabbitNameService {
     }
 
 
-    //inserts pets into the mysql database
+    //inserts names into the mysql database
     public void insertRN(String name) {
         nnMapper.insertRabbitName(name);
 
     }
+
+    //finds and removes all number and symbol characters from the end of names and deletes names that are not real
+    public ArrayList<Rabbit> cleanDB(){
+        ArrayList<Rabbit> db = nnMapper.getAllNames();
+        for (Rabbit r: db
+             ) {
+            String name = r.getName().replaceAll(" [^\\w].*", "").replaceAll(" [ at ].*", "").replaceAll("\\d.*", "");
+             r.setName(name);
+            nnMapper.updateName(r);
+            if (name.contains("foster") || name.equals("A") || name.contains("Foster")){
+                nnMapper.deleteName(r.getId());
+            }
+
+        }
+/*        //resetting the ids after clean up
+        ArrayList<Rabbit> newDB = nnMapper.getAllNames();
+        int i = 1;
+        for (Rabbit t: newDB
+             ) {t.setId(i);
+             nnMapper.updateID(t);
+             i++;
+
+        }*/
+
+        ArrayList<Rabbit> finalList = nnMapper.getAllNames();
+        return finalList;
+    }
+
 }
