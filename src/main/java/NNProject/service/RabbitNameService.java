@@ -103,4 +103,8 @@ public class RabbitNameService {
     }
     public User findUserByName(String username) {
         return userRepository.findByName(username);}
+
+        public void joinUR(String rabbitname, String username){
+        nnMapper.joinUR(rabbitname, username);
+        }
 }

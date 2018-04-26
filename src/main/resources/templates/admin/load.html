@@ -101,34 +101,34 @@
 
     <div class="panel-group" style="margin-top:40px">
         <div class="panel panel-primary">
-            <div class="panel-heading" style="background:#435969">
-                <h1 class="text-center" th:text="${welcome}"></h1>
-            </div>
+
+
+
             <div class="panel-body" >
                 <div class="container">
                     <div class="row">
-                    <div class="col-sm-4"></div>
-                    <form th:action="@{/nnproject/admin/submit}" method="POST" class="form-group" th:object="${userRabbit}">
+                        <div class="col-sm-4"></div>
+                        <form th:action="@{/nnproject/admin/load}" method="POST" class="form-group" th:object="${userRabbit}">
 
-                        <h3 class="form-signin-heading" th:text="${heading}" ></h3>
-                        <br/>
+                            <h3 class="form-signin-heading" >Zip Code, State(abbr), or City Name:</h3>
+                            <br/>
 
-                        <input type="text" id="rabbit" name="rabbit" th:field="*{rabbit}" th:placeholder="RabbitName"
-                               />  <br/>
+                            <input type="text" id="location" name="location" th:field="*{location}" th:placeholder="ex: 22308, VA(must be in all caps), Alexandria"
+                            />  <br/>
 
 
-                        <button class="btn btn-lg btn-primary" name="Submit"  type="Submit"  th:text="${buttonText}" ></button>
-                    </form></div>
+                            <button class="btn btn-lg btn-primary" name="Submit"  type="Submit"  >Submit</button>
+                        </form></div>
                     <div class="col-sm-4"></div>
                 </div>
             </div>
 
         </div>
 
-    <form th:action="@{/nnproject/logout}" method="get">
-        <button class="btn btn-md btn-primary btn-block" name="registration"
-                type="Submit">Logout</button>
-    </form>
+        <form th:action="@{/nnproject/logout}" method="get">
+            <button class="btn btn-md btn-primary btn-block" name="registration"
+                    type="Submit">Logout</button>
+        </form>
     </div>
 </div>
 </body>

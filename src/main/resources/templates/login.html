@@ -8,29 +8,110 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+	body{
+	background:#435969 ;
+	color:#212931;
+
+	}
+	h1, h3{
+        padding:5px;
+        color:#feca01;
+        text-shadow: 2px 2px 2px #f87f01;
+        }
+.btn {
+    position: relative;
+    border: none;
+    font-size: 20px;
+    color: #FFFFFF;
+    padding: 10px;
+    text-align: center;
+    -webkit-transition-duration: 0.2s; /* Safari */
+    transition-duration: 0.2s;
+    text-decoration: none;
+    overflow: hidden;
+
+
+}
+
+.btn:after {
+    content: "";
+    background: #e7f0ed;
+    display: block;
+    position: absolute;
+    padding-top: 300%;
+    padding-left: 350%;
+    margin-left: -20px!important;
+    margin-top: -120%;
+    opacity: 0;
+    transition: all 0.4s;
+
+}
+
+.btn:hover:after {
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s
+}
+
+.btn, input{
+margin-top: 15px;
+
+}
+.btn-warning, .btn-primary:hover{
+color:#212931;
+background:#f87f01;
+border: 2px outset #feca01;
+box-shadow: 3px 3px 5px #212931;
+
+}
+.btn-primary, .btn-warning:hover{
+background:#feca01;
+color:#212931;
+border: 2px outset #f87f01;
+box-shadow: 3px 3px 5px #f87f01;
+
+
+}
+
+.form-control{
+background:#e7f0ed;
+color:#f87f01;
+}
+</style>
 </head>
 
-<body style="background:violet">
-	<form th:action="@{/nnproject/registration}" method="get">
-		<button class="btn btn-md btn-warning btn-block" type="Submit">Go To Registration Page</button>
-	</form>	
+<body >
+
 	
 	<div class="container">
-		<img th:src="@{https://media.giphy.com/media/wJkr1P9QewrTy/giphy.gif}" class="img-responsive center-block" width="300" height="300" alt="Logo" />
-		<form th:action="@{/nnproject/login}" method="POST" class="form-signin">
-			<h3 class="form-signin-heading" th:text="Welcome"></h3>
-			<br/>
-			 
+        <div class="row"> <div class="col-sm-3">
+       </div>
+
+		<div class="col-sm-6"> <form th:action="@{/nnproject/login}" method="POST" class="form-signin">
+            <img src="https://media.giphy.com/media/ujrj9aoOdNvXO/giphy.gif" class="img-responsive center-block" width="100" height="100" />
+            <h1 class="text-center" >Welcome!</h1>
+
+            <h3> Please login to add a rabbit name to the database</h3>
 			<input type="text" id="name" name="name"  th:placeholder="Username"
-				class="form-control" /> <br/> 
+				class="form-control" />
 			<input type="password"  th:placeholder="Password"
-				id="password" name="password" class="form-control" /> <br /> 
+				id="password" name="password" class="form-control" />
 				
 			<div align="center" th:if="${param.error}">
-				<p style="font-size: 20; color: #FF1C19;">Email or Password invalid, please verify</p>
+				<p style="font-size: 30; color: #feca01">Email or Password invalid, please verify</p>
 			</div>
+
 			<button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="Submit" th:text="Login"></button>
 		</form>
-	</div>
+           <form th:action="@{/nnproject/registration}" method="get">
+                <button class="btn btn-md btn-warning btn-block" type="Submit">Go To Registration Page</button>
+            </form>
+
+            </div>
+
+        <div class="col-sm-3"></div>
+        </div></div>
 </body>
 </html>

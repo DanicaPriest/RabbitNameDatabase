@@ -2,8 +2,10 @@ package NNProject.mapper;
 
 import NNProject.model.Rabbit;
 import NNProject.model.User;
+import NNProject.model.UserRabbit;
 import org.apache.ibatis.annotations.*;
 
+import javax.persistence.JoinTable;
 import java.util.ArrayList;
 
 
@@ -20,6 +22,7 @@ public interface NNMapper {
     String UPDATE_ID = "UPDATE `nnproject`.rabbits SET id = #{id} WHERE name = #{name}";
     String GET_ALL__NAMES = "SELECT * FROM `nnproject`.rabbits";
     String DELETE_NAME= "DELETE FROM `nnproject`.rabbits where id = #{id}";
+    String JOIN_USERRABBIT= "SELECT r.name, u.username FROM `nnproject`.rabbits r inner join user_rabbits ur on(r.rabbit_id=ur.rabbit_id) inner join user u on(u.user_id=ur.user_id) where r.name= #{name} and u.username= #{username}";
 
     @Insert(INSERT_RABBIT_NAME)
     public int insertRabbitName(String rabbit);
@@ -45,5 +48,7 @@ public interface NNMapper {
     @Delete(DELETE_NAME)
     public void deleteName(int id);
 
+    @Select(JOIN_USERRABBIT)
+    public void joinUR(String rabbitname, String username);
 
 }

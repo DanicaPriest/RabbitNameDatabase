@@ -2,18 +2,21 @@ package NNProject.controller;
 
 import NNProject.model.Rabbit;
 import NNProject.model.User;
+import NNProject.model.UserRabbit;
 import NNProject.service.RabbitNameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.ArrayList;
 
 @Controller
@@ -23,15 +26,15 @@ public class NNController {
     RabbitNameService rabbitNameService;
 
 
-    @RequestMapping(value={"/", "/login"}, method = RequestMethod.GET)
-    public ModelAndView login(){
+    @RequestMapping(value = {"/", "/login"}, method = RequestMethod.GET)
+    public ModelAndView login() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("login");
         return modelAndView;
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public ModelAndView registration(){
+    public ModelAndView registration() {
         ModelAndView modelAndView = new ModelAndView();
         User user = new User();
         modelAndView.addObject("user", user);
@@ -61,19 +64,35 @@ public class NNController {
         return modelAndView;
     }
 
-    @RequestMapping(value="/admin/submit", method = RequestMethod.GET)
-    public ModelAndView submit(){
+    @RequestMapping(value = "/admin/submit", method = RequestMethod.GET)
+    public ModelAndView submitpage(@ModelAttribute UserRabbit userRabbit) {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = rabbitNameService.findUserByName(auth.getName());
-        modelAndView.addObject("userName", "Welcome " + user.getName());
-        modelAndView.addObject("adminMessage","You are awesome!!");
+        modelAndView.addObject("welcome","Welcome " + user.getName());
+        modelAndView.addObject("buttonText", "Submit");
+        modelAndView.addObject("heading", "Submit a Rabbit Name to the Database");
+
+        modelAndView.setViewName("admin/submit");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/admin/submit", method = RequestMethod.POST)
+    public ModelAndView submit(@ModelAttribute UserRabbit userRabbit) {
+        ModelAndView modelAndView = new ModelAndView();
+        String name = principal.getName();
+        rabbitNameService.insertRN(userRabbit.getRabbit());
+        rabbitNameService.joinUR(userRabbit.getRabbit(), name);
+        modelAndView.addObject("welcome","Thanks " + name);
+        modelAndView.addObject("buttonText", "Thank You!");
+        modelAndView.addObject("heading", "Submit another Rabbit Name to the Database");
         modelAndView.setViewName("admin/submit");
         return modelAndView;
     }
 
 
-    @RequestMapping("/load")
+
+    @RequestMapping("/admin/load")
     public ArrayList<String> loadPets(@RequestParam(value = "location", defaultValue = "virginia") String location) {
 
         ArrayList<String> rl = rabbitNameService.makeList(location, "100");
@@ -83,7 +102,7 @@ public class NNController {
     }
 
     @RequestMapping("/clean")
-    public ArrayList<Rabbit> cleanDB(){
+    public ArrayList<Rabbit> cleanDB() {
         return rabbitNameService.cleanDB();
     }
 
