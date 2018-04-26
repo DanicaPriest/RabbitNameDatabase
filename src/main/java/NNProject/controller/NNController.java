@@ -69,7 +69,7 @@ public class NNController {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = rabbitNameService.findUserByName(auth.getName());
-        modelAndView.addObject("welcome","Welcome " + user.getName());
+        modelAndView.addObject("welcome", "Welcome " + user.getName());
         modelAndView.addObject("buttonText", "Submit");
         modelAndView.addObject("heading", "Submit a Rabbit Name to the Database");
 
@@ -80,10 +80,10 @@ public class NNController {
     @RequestMapping(value = "/admin/submit", method = RequestMethod.POST)
     public ModelAndView submit(@ModelAttribute UserRabbit userRabbit) {
         ModelAndView modelAndView = new ModelAndView();
-        String name = principal.getName();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
         rabbitNameService.insertRN(userRabbit.getRabbit());
-        rabbitNameService.joinUR(userRabbit.getRabbit(), name);
-        modelAndView.addObject("welcome","Thanks " + name);
+        modelAndView.addObject("welcome", "Thanks " + name);
         modelAndView.addObject("buttonText", "Thank You!");
         modelAndView.addObject("heading", "Submit another Rabbit Name to the Database");
         modelAndView.setViewName("admin/submit");
@@ -93,12 +93,13 @@ public class NNController {
 
 
     @RequestMapping("/admin/load")
-    public ArrayList<String> loadPets(@RequestParam(value = "location", defaultValue = "virginia") String location) {
+    public ModelAndView loadRabbits() {
+        ModelAndView modelAndView = new ModelAndView();
+        ArrayList<String> pets = rabbitNameService.makeList();
+        modelAndView.addObject("pets", pets);
+        modelAndView.setViewName("admin/load");
 
-        ArrayList<String> rl = rabbitNameService.makeList(location, "100");
-
-
-        return rl;
+        return modelAndView;
     }
 
     @RequestMapping("/clean")

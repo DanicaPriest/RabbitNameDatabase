@@ -1,13 +1,15 @@
 package NNProject.model;
 
-public class Petfinder {
-    Pets pets;
+import NNProject.model.Pet;
 
-    public Pets getPets() {
-        return pets;
+public class Petfinder {
+    Pet pet;
+
+    public Pet getPet() {
+        return pet;
     }
 
-    public void setPets(Pets pets) {
-        this.pets = pets;
+    public void setPet(Pet pet) {
+        this.pet = pet;
     }
 }

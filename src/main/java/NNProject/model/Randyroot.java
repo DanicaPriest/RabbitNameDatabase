@@ -1,7 +1,6 @@
 package NNProject.model;
 
-public class PetRoot {
-
+public class Randyroot {
     Petfinder petfinder;
 
     public Petfinder getPetfinder() {

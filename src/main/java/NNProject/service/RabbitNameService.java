@@ -2,6 +2,8 @@ package NNProject.service;
 
 import NNProject.mapper.NNMapper;
 import NNProject.model.*;
+import NNProject.model.Pet;
+import NNProject.model.Randyroot;
 import NNProject.repository.RoleRepository;
 import NNProject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,28 +31,29 @@ public class RabbitNameService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     //maps the data from the petfinder api to an object
-    public PetRoot getRabbits(String location, String count) {
-        //adding 1 to count since results in api start at 0
-        int newCount = Integer.parseInt(count);
-        newCount++;
-        count = Integer.toString(newCount);
-        //mapping petfinder to PetRoot object and adding search parameters to url
-        String webUrl = "http://api.petfinder.com/pet.find?key=9bce8b750600914be2415a1932012ee0&count=" + count + "&format=json&location=" + location + "&animal=rabbit";
+    public Randyroot getRabbits() {
 
-        PetRoot pets = restTemplate.getForObject(webUrl, PetRoot.class);
+        String webUrl = "http://api.petfinder.com/pet.getRandom?key=9bce8b750600914be2415a1932012ee0&output=basic&format=json&animal=rabbit";
 
-        return pets;
+        Randyroot pet = restTemplate.getForObject(webUrl, Randyroot.class);
+
+
+        return pet;
+
+
     }
 
-    public ArrayList<String> makeList(String location, String count){
-        Pet[] rabbits = getRabbits(location, count).getPetfinder().getPets().getPet();
+    public ArrayList<String> makeList(){
+
         ArrayList<String> rabbitNames = new ArrayList<>();
 
-        for (Pet r: rabbits
-             ) {
-            String name = r.getName().get$t().replaceAll(" [^\\w].*", "").replaceAll(" [ at ].*", "").replaceAll("\\d.*", "");
+        for (int i = 1; i <= 100; i++) {
+            System.out.println("test");
+            Randyroot rabbit = getRabbits();
+            String name = rabbit.getPetfinder().getPet().getName().get$t().replaceAll(" [^\\w].*", "").replaceAll(" [ at ].*", "").replaceAll("\\d.*", "");
             rabbitNames.add(name);
             insertRN(name);
+            System.out.println(name);
         }
         return rabbitNames;
     }
@@ -104,7 +107,8 @@ public class RabbitNameService {
     public User findUserByName(String username) {
         return userRepository.findByName(username);}
 
-        public void joinUR(String rabbitname, String username){
+        //join tables for username and rabbit name
+        /*public void joinUR(String rabbitname, String username){
         nnMapper.joinUR(rabbitname, username);
-        }
+        }*/
 }

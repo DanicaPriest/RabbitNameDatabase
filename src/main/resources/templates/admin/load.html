@@ -1,15 +1,12 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Submit a Rabbit Name</title>
+    <meta charset="UTF-8">
+    <title>Rabbits</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
-<style>
-     body{
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+         body{
     background:#435969 ;
     color:#212931;
 
@@ -17,6 +14,10 @@
     h1{
     padding:5px;
     color:#feca01;
+    text-shadow: 2px 2px 2px #f87f01;
+    }
+    h3{
+color:#feca01;
     text-shadow: 2px 2px 2px #f87f01;
     }
     .btn {
@@ -79,57 +80,61 @@
     }
 
 
-    .panel-primary{
-    background:#e7f0ed;
-    color:#2129311;
-    }
-    input{
-    display:inline;
-    width:400px;
-    margin:20px;
-    }
-    form{
-    margin:20px;
-    }
-    .container{
-    width:600px;
-    }
-</style>
 
+
+
+
+
+
+
+    </style>
+</head>
 <body>
-<div class="container">
-
-    <div class="panel-group" style="margin-top:40px">
-        <div class="panel panel-primary">
-
+<h1 class="title text-center">Here are the 100 Rabbit Names you just added to the Database!</h1>
+<div class="container-fluid">
+    <div class="row" th:block th:each="p : ${pets}">
 
 
-            <div class="panel-body" >
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-4"></div>
-                        <form th:action="@{/nnproject/admin/load}" method="POST" class="form-group" th:object="${userRabbit}">
-
-                            <h3 class="form-signin-heading" >Zip Code, State(abbr), or City Name:</h3>
-                            <br/>
-
-                            <input type="text" id="location" name="location" th:field="*{location}" th:placeholder="ex: 22308, VA(must be in all caps), Alexandria"
-                            />  <br/>
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+           <h3 id="name" th:text="${p.name}"></h3>
+           </div>
 
 
-                            <button class="btn btn-lg btn-primary" name="Submit"  type="Submit"  >Submit</button>
-                        </form></div>
-                    <div class="col-sm-4"></div>
-                </div>
+        <div>
+
+            <div class="col-sm-4">
+
+
+
             </div>
 
         </div>
 
-        <form th:action="@{/nnproject/logout}" method="get">
-            <button class="btn btn-md btn-primary btn-block" name="registration"
-                    type="Submit">Logout</button>
-        </form>
-    </div>
+    </div ></div>
+
+    </th:block>
+
 </div>
+<div class="container-fluid">
+    <div class="row">
+
+
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+<form th:action="@{/nnproject/admin/submit}" method="get">
+    <button class="btn btn-md btn-primary btn-block"
+            type="Submit">Back to Submit Page</button>
+</form>
+<form th:action="@{/nnproject/admin/load}" method="get">
+    <button class="btn btn-md btn-primary btn-block"
+            type="Submit">Load 100 More Rabbits</button>
+</form>
+<form th:action="@{/nnproject/logout}" method="get">
+    <button class="btn btn-md btn-primary btn-block"
+            type="Submit">Logout</button>
+</form>
+        </div><div class="col-sm-4"></div></div></div>
+
 </body>
 </html>
