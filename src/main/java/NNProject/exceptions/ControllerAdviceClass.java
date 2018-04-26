@@ -94,17 +94,17 @@ import org.springframework.web.servlet.NoHandlerFoundException;
     CustomException handle451(JsonMappingException e) {
         CustomException error = new CustomException();
         error.setReason(e.getMessage());
-        error.setMessage("Results per page number too large or small");
+        error.setMessage(e.getMessage());
         error.setStatus(404);
         return error;
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public @ResponseBody
-    CustomException handle452() {
+    CustomException handle452(HttpMessageNotReadableException e) {
         CustomException error = new CustomException();
         error.setReason("Results per page number too large or small");
-        error.setMessage("Results per page number too large or small");
+        error.setMessage(e.getMessage());
         error.setStatus(404);
         return error;
 

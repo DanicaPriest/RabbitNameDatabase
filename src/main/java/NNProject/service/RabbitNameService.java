@@ -31,14 +31,15 @@ public class RabbitNameService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     //maps the data from the petfinder api to an object
-    public Randyroot getRabbits() {
+    public String getRabbits() {
 
         String webUrl = "http://api.petfinder.com/pet.getRandom?key=9bce8b750600914be2415a1932012ee0&output=basic&format=json&animal=rabbit";
 
         Randyroot pet = restTemplate.getForObject(webUrl, Randyroot.class);
+        String name = pet.getPetfinder().getPet().getName().get$t();
 
 
-        return pet;
+        return name;
 
 
     }
@@ -48,9 +49,9 @@ public class RabbitNameService {
         ArrayList<String> rabbitNames = new ArrayList<>();
 
         for (int i = 1; i <= 100; i++) {
-            System.out.println("test");
-            Randyroot rabbit = getRabbits();
-            String name = rabbit.getPetfinder().getPet().getName().get$t().replaceAll(" [^\\w].*", "").replaceAll(" [ at ].*", "").replaceAll("\\d.*", "");
+
+            String rabbit = getRabbits();
+            String name = rabbit.replaceAll(" [^\\w].*", "").replaceAll(" [ at ].*", "").replaceAll("\\d.*", "");
             rabbitNames.add(name);
             insertRN(name);
             System.out.println(name);
@@ -73,7 +74,7 @@ public class RabbitNameService {
             String name = r.getName().replaceAll(" [^\\w].*", "").replaceAll(" [ at ].*", "").replaceAll("\\d.*", "");
              r.setName(name);
             nnMapper.updateName(r);
-            if (name.contains("foster") || name.equals("A") || name.contains("Foster")){
+            if (name.contains("foster") || name.contentEquals("A") || name.contains("Foster")){
                 nnMapper.deleteName(r.getId());
             }
 
