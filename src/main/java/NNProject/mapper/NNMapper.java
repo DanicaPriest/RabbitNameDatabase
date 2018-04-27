@@ -17,11 +17,11 @@ public interface NNMapper {
     String INSERT_USER = "INSERT INTO `nnproject`.user (user, password) " +
             "VALUES (#{user}, #{password})";
     String GET_USER = "SELECT * FROM `nnproject`.user where username = #{username}";
-    String GET_NAME_BY_ID = "SELECT * FROM `nnproject`.rabbits where id = #{id}";
-    String UPDATE_NAME = "UPDATE `nnproject`.rabbits SET name = #{name} WHERE id = #{id}";
-    String UPDATE_ID = "UPDATE `nnproject`.rabbits SET id = #{id} WHERE name = #{name}";
+    String GET_NAME_BY_ID = "SELECT * FROM `nnproject`.rabbits where rabbit_id = #{rabbit_id}";
+    String UPDATE_NAME = "UPDATE `nnproject`.rabbits SET name = #{name} WHERE rabbit_id = #{rabbit_id}";
+    String UPDATE_ID = "UPDATE `nnproject`.rabbits SET rabbit_id = #{id} WHERE name = #{name}";
     String GET_ALL__NAMES = "SELECT * FROM `nnproject`.rabbits";
-    String DELETE_NAME= "DELETE FROM `nnproject`.rabbits where id = #{id}";
+    String DELETE_NAME= "DELETE FROM `nnproject`.rabbits where rabbit_id = #{rabbit_id}";
     String JOIN_USERRABBIT= "SELECT r.name, u.username FROM `nnproject`.rabbits r inner join user_rabbits ur on(r.rabbit_id=ur.rabbit_id) inner join user u on(u.user_id=ur.user_id) where r.name= #{name} and u.username= #{username}";
 
     @Insert(INSERT_RABBIT_NAME)

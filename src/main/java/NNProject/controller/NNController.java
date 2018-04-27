@@ -97,14 +97,21 @@ public class NNController {
         ModelAndView modelAndView = new ModelAndView();
         ArrayList<String> pets = rabbitNameService.makeList();
         modelAndView.addObject("pets", pets);
+        modelAndView.addObject("heading", "Here are the 100 Rabbit Names you just added to the Database!");
         modelAndView.setViewName("admin/load");
 
         return modelAndView;
     }
 
     @RequestMapping("/clean")
-    public ArrayList<Rabbit> cleanDB() {
-        return rabbitNameService.cleanDB();
+    public ModelAndView cleanDB() { ModelAndView modelAndView = new ModelAndView();
+        ArrayList<String> pets = rabbitNameService.cleanDB();
+        modelAndView.addObject("pets", pets);
+        modelAndView.addObject("heading", "Updated Rabbit Name Database:");
+        modelAndView.setViewName("admin/load");
+
+        return modelAndView;
+
     }
 
 }

@@ -44,7 +44,7 @@ public class RabbitNameService {
 
     }
 
-    public ArrayList<String> makeList(){
+    public ArrayList<String> makeList() {
 
         ArrayList<String> rabbitNames = new ArrayList<>();
 
@@ -67,15 +67,18 @@ public class RabbitNameService {
     }
 
     //finds and removes all number and symbol characters from the end of names and deletes names that are not real
-    public ArrayList<Rabbit> cleanDB(){
+    public ArrayList<String> cleanDB() {
         ArrayList<Rabbit> db = nnMapper.getAllNames();
-        for (Rabbit r: db
-             ) {
+        ArrayList<String> list = new ArrayList();
+        for (Rabbit r : db
+                ) {
             String name = r.getName().replaceAll(" [^\\w].*", "").replaceAll(" [ at ].*", "").replaceAll("\\d.*", "");
-             r.setName(name);
+            r.setName(name);
             nnMapper.updateName(r);
-            if (name.contains("foster") || name.contentEquals("A") || name.contains("Foster")){
-                nnMapper.deleteName(r.getId());
+            if (name.contains("foster") || name.contentEquals("A") || name.contains("Foster") || name.contains("FOSTER")) {
+                System.out.println(name);
+                nnMapper.deleteName(r.getRabbit_id());
+
             }
 
         }
@@ -89,15 +92,17 @@ public class RabbitNameService {
 
         }*/
 
-        ArrayList<Rabbit> finalList = nnMapper.getAllNames();
-        return finalList;
+//add names to string array so it can use the load.html template
+        ArrayList<Rabbit> newdb = nnMapper.getAllNames();
+        for (Rabbit rt : newdb
+                ) {
+            list.add(rt.getName());
+
+        }
+        return list;
     }
 
-   /* public User findUserByName(String username) {
-
-        return nnMapper.getUser(username);
-    }*/
-
+//methods or spring security auth
     public void saveUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
@@ -105,10 +110,12 @@ public class RabbitNameService {
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
         userRepository.save(user);
     }
-    public User findUserByName(String username) {
-        return userRepository.findByName(username);}
 
-        //join tables for username and rabbit name
+    public User findUserByName(String username) {
+        return userRepository.findByName(username);
+    }
+
+    //join tables for username and rabbit name
         /*public void joinUR(String rabbitname, String username){
         nnMapper.joinUR(rabbitname, username);
         }*/

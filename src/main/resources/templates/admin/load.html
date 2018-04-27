@@ -12,14 +12,25 @@
 
     }
     h1{
-    padding:5px;
+    padding:15px;
     color:#feca01;
     text-shadow: 2px 2px 2px #f87f01;
     }
-    h3{
-color:#feca01;
-    text-shadow: 2px 2px 2px #f87f01;
+
+    #main{
+    background:#e7f0ed;
+    color:#212931;
+    padding:15px;
+    border: 5px outset #feca01;
+    border-radius: 4px;
     }
+
+    li{
+    font-size:25px;
+    margin-left:20px;
+
+    }
+
     .btn {
     position: relative;
     border: none;
@@ -56,21 +67,21 @@ color:#feca01;
     padding: 0;
     margin: 0;
     opacity: 1;
-    transition: 0s
+    transition: 0s;
     }
 
     .btn, input{
     margin-top: 15px;
 
     }
-    .btn-warning, .btn-primary:hover{
+    .btn-warning, .btn-primary:hover, .btn-warning:active{
     color:#212931;
     background:#f87f01;
     border: 2px outset #feca01;
     box-shadow: 3px 3px 5px #212931;
 
     }
-    .btn-primary, .btn-warning:hover{
+    .btn-primary, .btn-warning:hover, .btn-primary:active{
     background:#feca01;
     color:#212931;
     border: 2px outset #f87f01;
@@ -90,14 +101,15 @@ color:#feca01;
     </style>
 </head>
 <body>
-<h1 class="title text-center">Here are the 100 Rabbit Names you just added to the Database!</h1>
+<h1 class="title text-center" th:text="${heading}"></h1>
 <div class="container-fluid">
-    <div class="row" th:block th:each="p : ${pets}">
+    <div class="row" >
 
 
         <div class="col-sm-4"></div>
-        <div class="col-sm-4">
-           <h3 id="name" th:text="${p}"></h3>
+        <div class="col-sm-4" id="main">
+            <ol >
+                <li  th:block th:each="p : ${pets}" id="name" th:text="${p}"></li></th:block></ol>
            </div>
 
 
