@@ -59,21 +59,28 @@
 margin-top: 15px;
 
 }
-.btn-warning, .btn-primary:hover, .btn-warning:active{
-color:#212931;
-background:#f87f01;
-border: 2px outset #feca01;
-box-shadow: 3px 3px 5px #212931;
+ .btn-warning, .btnprimary:hover{
+    color:#212931;
+    background:#f87f01;
+    border: 2px outset #feca01;
+    box-shadow: 3px 3px 5px #212931;
 
-}
-.btn-primary, .btn-warning:hover, .btn-primary:active{
-background:#feca01;
-color:#212931;
-border: 2px outset #f87f01;
-box-shadow: 3px 3px 5px #f87f01;
+    }
+    .btnprimary:active{
+   background:#435969;
+   color:#e7f0ed;
+     border: 2px outset #feca01;
+    box-shadow: 3px 3px 5px #212931;
+
+    }
+    .btnprimary, .btn-warning:hover{
+    background:#feca01;
+    color:#212931;
+    border: 2px outset #f87f01;
+    box-shadow: 3px 3px 5px #f87f01;
 
 
-}
+    }
 
 .form-control{
 background:#e7f0ed;
@@ -103,7 +110,7 @@ color:#f87f01;
 				<p style="font-size: 30; color: #feca01">Email or Password invalid, please verify</p>
 			</div>
 
-			<button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="Submit" th:text="Login"></button>
+			<button class="btn btn-lg btnprimary btn-block" name="Submit" value="Login" type="Submit" th:text="Login"></button>
 		</form>
            <form th:action="@{/nnproject/registration}" method="get">
                 <button class="btn btn-md btn-warning btn-block" type="Submit">Go To Registration Page</button>
