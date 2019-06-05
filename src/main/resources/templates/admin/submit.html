@@ -6,107 +6,10 @@
     <title>Submit a Rabbit Name</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link th:href="@{/css/main.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/submitcss.css}" rel="stylesheet" type="text/css"/>
 </head>
-<style>
-     body{
-    background:#435969 ;
-    color:#212931;
 
-    }
-    h1{
-    padding:5px;
-    color:#feca01;
-    text-shadow: 2px 2px 2px #f87f01;
-    }
-    .btn {
-    position: relative;
-    border: none;
-    font-size: 20px;
-    color: #FFFFFF;
-    padding: 10px;
-    text-align: center;
-    -webkit-transition-duration: 0.2s; /* Safari */
-    transition-duration: 0.2s;
-    text-decoration: none;
-    overflow: hidden;
-
-
-    }
-    .panel-heading{
-
-    }
-
-    .btn:after {
-    content: "";
-    background: #e7f0ed;
-    display: block;
-    position: absolute;
-    padding-top: 300%;
-    padding-left: 350%;
-    margin-left: -20px!important;
-    margin-top: -120%;
-    opacity: 0;
-    transition: all 0.4s;
-
-    }
-
-    .btn:hover:after {
-    padding: 0;
-    margin: 0;
-    opacity: 1;
-    transition: 0s
-    }
-
-    .btn, input{
-    margin-top: 15px;
-
-    }
-    .btn-warning, .btnprimary:hover{
-    color:#212931;
-    background:#f87f01;
-    border: 2px outset #feca01;
-    box-shadow: 3px 3px 5px #212931;
-
-    }
-      .btnprimary:active{
-   background:#435969;
-   color:#e7f0ed;
-     border: 2px outset #feca01;
-    box-shadow: 3px 3px 5px #212931;
-
-    }
-    .btnprimary, .btn-warning:hover{
-    background:#feca01;
-    color:#212931;
-    border: 2px outset #f87f01;
-    box-shadow: 3px 3px 5px #f87f01;
-    position: relative;
-
-
-    }
-
-
-    .panel-primary{
-    background:#e7f0ed;
-    color:#2129311;
-    }
-    input{
-    display:inline;
-    width:400px;
-    margin:20px;
-    }
-    form{
-    margin:20px;
-    }
-    .container{
-    width:600px;
-    }
-    .btnrow{
-    margin:20px;
-    }
-
-</style>
 
 <body>
 <div class="container">
